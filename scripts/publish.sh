@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+PROJECT_DIR=$(cd $(dirname $0)/..; pwd -P)
+PROJECT_NAME=$(basename $PROJECT_DIR)
+TAG=$1
+
+cd ${PROJECT_DIR}
+
+sed -i -e "s|'com.github.DaikonWeb:daikon:.*'|'com.github.DaikonWeb:daikon:${TAG}'|g" build.gradle
+sed -i -e "s|'com.github.DaikonWeb:${PROJECT_NAME}:.*'|'com.github.DaikonWeb:${PROJECT_NAME}:${TAG}'|g" README.md
+sed -i -e "s|<version>.*</version>|<version>${TAG}</version>|g" README.md
+
+git commit -am "Release ${TAG}"
+git tag $TAG
+git push
+git push --tags
