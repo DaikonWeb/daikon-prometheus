@@ -1,9 +1,9 @@
 package daikon.prometheus
 
 import daikon.HttpServer
-import khttp.get
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import topinambur.http
 
 class PrometheusMetricsTest {
 
@@ -12,7 +12,7 @@ class PrometheusMetricsTest {
         HttpServer(5555)
             .prometheus("/foo")
             .start().use {
-                assertThat(get("http://localhost:5555/foo").text).contains("jvm")
+                assertThat("http://localhost:5555/foo".http.get().body).contains("jvm")
             }
     }
 
@@ -24,9 +24,9 @@ class PrometheusMetricsTest {
                 ctx.meterRegistry().counter("calls").increment()
             }
             .start().use {
-                get("http://localhost:5555/bar")
-                get("http://localhost:5555/bar")
-                assertThat(get("http://localhost:5555/foo").text).contains("calls_total 2.0")
+                "http://localhost:5555/bar".http.get()
+                "http://localhost:5555/bar".http.get()
+                assertThat("http://localhost:5555/foo".http.get().body).contains("calls_total 2.0")
             }
     }
 }

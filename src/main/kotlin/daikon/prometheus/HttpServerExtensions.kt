@@ -1,7 +1,7 @@
 package daikon.prometheus
 
-import daikon.core.Context
 import daikon.HttpServer
+import daikon.core.Context
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics
